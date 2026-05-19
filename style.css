@@ -47,7 +47,7 @@ a { text-decoration: none; color: inherit; }
   position:fixed; inset:0; z-index:99999; background:var(--bg-dark);
   display:flex; align-items:center; justify-content:center; flex-direction:column;
 }
-.welcome-inner { text-align:center; position:relative; z-index:2; }
+.welcome-inner { text-align:center; position:relative; z-index:4; }
 .welcome-line {
   font-family:var(--serif); font-size:clamp(40px,8vw,100px); font-weight:700;
   color:var(--text-light); line-height:1.1; overflow:hidden;
