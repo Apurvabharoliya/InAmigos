@@ -127,6 +127,26 @@ function initNavbar() {
       }
     }
   });
+
+  // Dynamic Scroll Highlighter
+  const sections = document.querySelectorAll('section[id]');
+  sections.forEach(section => {
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top 160px",
+      end: "bottom 160px",
+      onToggle: (self) => {
+        if (self.isActive) {
+          const id = section.getAttribute('id');
+          document.querySelectorAll('.nav-links a, .mobile-nav-link').forEach(link => {
+            link.classList.remove('active');
+          });
+          const activeNavLinks = document.querySelectorAll(`.nav-links a[href="#${id}"], .mobile-nav-link[href="#${id}"]`);
+          activeNavLinks.forEach(link => link.classList.add('active'));
+        }
+      }
+    });
+  });
 }
 
 /* ─── About Text Reveal (word-by-word) ─── */
