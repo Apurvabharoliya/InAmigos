@@ -903,11 +903,11 @@ function initDonationModal() {
     };
 
     try {
-      if (typeof Razorpay !== 'undefined') {
+      if (typeof Razorpay !== 'undefined' && RAZORPAY_KEY_ID !== "rzp_test_InAmigosDemoKey") {
         const rzp1 = new Razorpay(options);
         rzp1.open();
       } else {
-        // Razorpay script not loaded or blocked (e.g. by adblockers/CORS), run high-fidelity simulation
+        // Razorpay script not loaded or placeholder test key is active: use our spectacular checkout simulator
         runSimulatedCheckout(options, nameVal, amountVal);
       }
     } catch (err) {
