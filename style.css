@@ -16,6 +16,27 @@
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
+
+/* ─── Premium Custom scrollbar ─── */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: var(--bg-dark);
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+  border-left: 1px solid rgba(255, 255, 255, 0.02);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 100px;
+  border: 2px solid var(--bg-dark);
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
 body { font-family: var(--sans); background: var(--bg-dark); color: var(--text-body); overflow-x: hidden; line-height: 1.6; }
 img { width:100%; display:block; }
 a { text-decoration: none; color: inherit; }
