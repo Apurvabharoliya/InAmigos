@@ -187,24 +187,25 @@ function initAboutCards() {
   });
 }
 
-/* ─── Horizontal Scroll Projects ─── */
+/* ─── Projects Grid Animations ─── */
 function initHorizontalScroll() {
-  const wrapper = document.getElementById('projects-horizontal-wrapper');
-  const panels = document.getElementById('projects-panels');
-  if (!wrapper || !panels) return;
-
-  const totalScroll = panels.scrollWidth - wrapper.offsetWidth;
-
-  gsap.to(panels, {
-    x: -totalScroll,
-    ease: 'none',
-    scrollTrigger: {
-      trigger: wrapper,
-      pin: true,
-      scrub: 1,
-      end: () => '+=' + totalScroll,
-      invalidateOnRefresh: true
-    }
+  const cards = document.querySelectorAll('.project-card');
+  cards.forEach((card, i) => {
+    ScrollTrigger.create({
+      trigger: card,
+      start: 'top 85%',
+      onEnter: () => {
+        gsap.to(card, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          delay: (i % 3) * 0.15,
+          ease: 'power2.out'
+        });
+        card.classList.add('visible');
+      },
+      once: true
+    });
   });
 }
 
@@ -466,7 +467,7 @@ function initProjectModal() {
   const overlay = document.getElementById('project-modal-overlay');
   const modal = document.getElementById('project-modal');
   const closeBtn = document.getElementById('project-modal-close');
-  const panels = document.querySelectorAll('.project-panel');
+  const panels = document.querySelectorAll('.project-card');
 
   if (!overlay || !modal || !closeBtn) return;
 
@@ -684,8 +685,15 @@ function initVolunteerModal() {
   });
 }
 
-/* ═══ INIT ═══ */
-document.addEventListener('DOMContentLoaded', () => {
+function runInit() {
+  if (typeof lucide !== 'undefined') lucide.createIcons();
   initWelcomeScreen();
-});
+}
+
+/* ═══ INIT ═══ */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', runInit);
+} else {
+  runInit();
+}
 
