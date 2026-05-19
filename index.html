@@ -90,7 +90,7 @@
           <li><a href="#gallery" id="nav-gallery">Gallery</a></li>
           <li><a href="#events" id="nav-events">Events</a></li>
           <li><a href="#faq" id="nav-faq">FAQ</a></li>
-          <li><a href="donate.html" style="color: var(--accent); font-weight: 700;">Donate</a></li>
+          <li><a href="#" class="open-donate-trigger" style="color: var(--accent); font-weight: 700;">Donate</a></li>
         </ul>
       </nav>
 
@@ -118,7 +118,7 @@
       <a href="#gallery" class="mobile-nav-link">Gallery</a>
       <a href="#events" class="mobile-nav-link">Events</a>
       <a href="#faq" class="mobile-nav-link">FAQ</a>
-      <a href="donate.html" class="mobile-nav-link" style="color: var(--accent); font-weight: 700;">Donate</a>
+      <a href="#" class="mobile-nav-link open-donate-trigger" style="color: var(--accent); font-weight: 700;">Donate</a>
       <a href="https://inamigosfoundation.org.in/volunteers" class="mobile-nav-cta open-volunteer-trigger" target="_blank">Join the
         Movement</a>
     </nav>
@@ -629,7 +629,7 @@
           <span>VOLUNTEER</span>
           <i data-lucide="heart" class="cta-btn-icon"></i>
         </a>
-        <a href="donate.html" class="cta-btn cta-btn-alt magnetic-btn" id="cta-support-btn">
+        <a href="#" class="cta-btn cta-btn-alt magnetic-btn open-donate-trigger" id="cta-support-btn">
           <span>SUPPORT</span>
           <i data-lucide="hand-helping" class="cta-btn-icon"></i>
         </a>
@@ -741,6 +741,12 @@
         <div class="project-modal-number">GIVE</div>
         <h2 class="project-modal-title">Empower A Cause</h2>
         <p class="project-modal-desc">Your contribution directly fuels grassroots transformations. Choose a project, select your preferred way of giving, and make a massive ripple today.</p>
+        
+        <!-- Key Entry Config Block -->
+        <div class="key-setting-block">
+          <label for="custom-key-input">Razorpay Key ID</label>
+          <input type="text" id="custom-key-input" placeholder="Paste rzp_test_ / rzp_live_ key">
+        </div>
         
         <!-- Step Toggles -->
         <div class="donation-type-toggles">
@@ -901,7 +907,7 @@
       <div class="footer-nav-col">
         <h3>Get Involved</h3>
         <a href="https://inamigosfoundation.org.in/volunteers" target="_blank">Volunteer</a>
-        <a href="donate.html">Donate</a>
+        <a href="#" class="open-donate-trigger">Donate</a>
         <a href="https://inamigosfoundation.org.in/" target="_blank">Partner With Us</a>
         <a href="https://inamigosfoundation.org.in/" target="_blank">Contact</a>
       </div>

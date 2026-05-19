@@ -537,10 +537,10 @@ function initProjectModal() {
     });
     highlightsContainer.appendChild(ul);
 
-    // Dynamically direct user to dedicated donate page withcause preselected
+    // Set default href to hash to trigger local click listener
     const donateBtn = document.getElementById('project-modal-donate-btn');
     if (donateBtn) {
-      donateBtn.href = `donate.html?cause=${projectId}`;
+      donateBtn.href = '#';
     }
 
     // Show modal & overlay
