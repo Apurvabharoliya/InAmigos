@@ -190,22 +190,40 @@ function initAboutCards() {
 /* ─── Projects Grid Animations ─── */
 function initHorizontalScroll() {
   const cards = document.querySelectorAll('.project-card');
+  
+  // Set initial 3D transform perspective properties
+  gsap.set(cards, { 
+    transformPerspective: 1200, 
+    transformOrigin: "top center" 
+  });
+
   cards.forEach((card, i) => {
-    ScrollTrigger.create({
-      trigger: card,
-      start: 'top 85%',
-      onEnter: () => {
-        gsap.to(card, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          delay: (i % 3) * 0.15,
-          ease: 'power2.out'
-        });
-        card.classList.add('visible');
+    gsap.fromTo(card, 
+      {
+        opacity: 0,
+        y: 90,
+        rotationX: -15,
+        scale: 0.92
       },
-      once: true
-    });
+      {
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
+        scale: 1,
+        duration: 1.0,
+        ease: 'power4.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+          once: true
+        },
+        delay: (i % 3) * 0.12,
+        onComplete: () => {
+          card.classList.add('visible');
+        }
+      }
+    );
   });
 }
 
