@@ -29,41 +29,41 @@ function initWelcomeScreen() {
     filter: 'blur(0px)',
     scale: 1,
     y: 0,
-    duration: 0.06,
-    stagger: 0.04,
+    duration: 0.04,
+    stagger: 0.02,
     ease: 'power2.out',
-    delay: 0.3
+    delay: 0.15
   })
   .to('.welcome-tagline', {
     opacity: 1,
-    duration: 0.6,
+    duration: 0.4,
     ease: 'power2.out'
-  }, '-=0.3')
-  // Hold the text
-  .to({}, { duration: 1.2 })
+  }, '-=0.2')
+  // Hold the text (shortened from 1.2s to 0.4s for snappiness)
+  .to({}, { duration: 0.4 })
   // Slide text up
   .to('.welcome-inner', {
-    y: -80,
+    y: -60,
     opacity: 0,
-    duration: 0.7,
+    duration: 0.4,
     ease: 'power3.inOut'
   })
   // Split mask away
   .to('.welcome-mask-left', {
     xPercent: -100,
-    duration: 0.8,
+    duration: 0.5,
     ease: 'power3.inOut'
-  }, '-=0.4')
+  }, '-=0.25')
   .to('.welcome-mask-right', {
     xPercent: 100,
-    duration: 0.8,
+    duration: 0.5,
     ease: 'power3.inOut'
   }, '<')
   .to('.welcome-screen', {
     opacity: 0,
-    duration: 0.3,
+    duration: 0.25,
     ease: 'power2.out'
-  }, '-=0.2');
+  }, '-=0.15');
 }
 
 /* ═══ 2. PAGE ANIMATIONS ═══ */
