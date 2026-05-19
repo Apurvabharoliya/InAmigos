@@ -537,6 +537,12 @@ function initProjectModal() {
     });
     highlightsContainer.appendChild(ul);
 
+    // Dynamically direct user to dedicated donate page withcause preselected
+    const donateBtn = document.getElementById('project-modal-donate-btn');
+    if (donateBtn) {
+      donateBtn.href = `donate.html?cause=${projectId}`;
+    }
+
     // Show modal & overlay
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';

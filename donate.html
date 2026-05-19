@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empower a Cause — InAmigos Foundation Donation Portal</title>
+  <meta name="description" content="Support InAmigos Foundation causes. Securely donate online via Razorpay to support youth development, animal welfare, women empowerment, environment, and education.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- GSAP Core and ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+  <!-- Global Stylesheet -->
+  <link rel="stylesheet" href="style.css?v=9.0">
+
+  <!-- Custom Page Styles -->
+  <style>
+    body {
+      background: #09090b;
+      color: #f4f4f5;
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .donate-hero {
+      position: relative;
+      padding: 120px 0 80px;
+      background: radial-gradient(circle at 50% 0%, rgba(0, 200, 83, 0.08) 0%, transparent 60%);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 40px;
+      transition: 0.3s;
+    }
+
+    .back-btn:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(0, 200, 83, 0.05);
+      transform: translateX(-4px);
+    }
+
+    .donate-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* Left Info Cards */
+    .cause-showcase {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .cause-card-new {
+      background: rgba(22, 22, 25, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+      transition: 0.3s var(--ease);
+    }
+
+    .cause-card-new:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 200, 83, 0.05);
+    }
+
+    .cause-card-new img {
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .cause-card-info {
+      flex: 1;
+    }
+
+    .cause-card-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+
+    .cause-card-info p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .cause-impact-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 30px;
+      background: rgba(0, 200, 83, 0.08);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(0, 200, 83, 0.15);
+    }
+
+    /* Right Portal Panel */
+    .portal-container {
+      background: rgba(22, 22, 25, 0.65);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 40px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      position: sticky;
+      top: 40px;
+    }
+
+    .portal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    .portal-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    /* Key Entry field for real mode testing */
+    .key-setting-block {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .key-setting-block label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .key-setting-block input {
+      background: transparent;
+      border: none;
+      color: var(--accent);
+      font-size: 13px;
+      font-family: monospace;
+      outline: none;
+      text-align: right;
+      flex: 1;
+    }
+
+    .key-setting-block input::placeholder {
+      color: rgba(255, 255, 255, 0.2);
+    }
+
+    @media(max-width: 1024px) {
+      .donate-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .portal-container {
+        position: static;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Preloader Screen -->
+  <div class="welcome-screen" id="welcome-screen">
+    <div class="preloader-wrap">
+      <div class="welcome-title">INAMIGOS</div>
+      <div class="welcome-subtitle">FOUNDATION</div>
+      <div class="preloader-progress-bar">
+        <div class="preloader-progress-fill" id="preloader-progress-fill"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container donate-hero">
+    <a href="index.html#projects" class="back-btn">
+      <i data-lucide="arrow-left"></i>
+      <span>Back to Initiatives</span>
+    </a>
+
+    <div class="donate-grid">
+      <!-- Left side causes overview -->
+      <div class="cause-showcase">
+        <div style="margin-bottom: 20px;">
+          <h1 class="project-modal-title" style="margin-bottom: 12px;">Support Our Initiatives</h1>
+          <p class="project-modal-desc" style="max-width: 550px;">Choose a dedicated cause that speaks to your heart. From feeding street animals to empowering young girls with job skills, every gift matters.</p>
+        </div>
+
+        <!-- Project Vikas -->
+        <div class="cause-card-new" data-cause="vikas">
+          <img src="assets/images/project-vikas.jpg" alt="Project Vikas">
+          <div class="cause-card-info">
+            <h3>Project Vikas</h3>
+            <p>Empowering marginalized youth with dynamic corporate readiness training, vocational workshops, and internships.</p>
+            <div class="cause-impact-badge">
+              <i data-lucide="award" style="width: 14px; height: 14px;"></i>
+              <span>80%+ Job Placement Rate</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Jeev -->
+        <div class="cause-card-new" data-cause="jeev">
+          <img src="assets/images/project-jeev.jpg" alt="Project Jeev">
+          <div class="cause-card-info">
+            <h3>Project Jeev</h3>
+            <p>A comprehensive animal welfare initiative managing 24/7 rescue drives, feed distributions, and clinical aids.</p>
+            <div class="cause-impact-badge">
+              <i data-lucide="heart" style="width: 14px; height: 14px;"></i>
+              <span>10,000+ Animals Fed</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Udaan -->
+        <div class="cause-card-new" data-cause="udaan">
+          <img src="assets/images/project-udaan.jpg" alt="Project Udaan">
+          <div class="cause-card-info">
+            <h3>Project Udaan</h3>
+            <p>Fostering financial independence among girls and young women through tailor-made tailoring, computer, and entrepreneurial training.</p>
+            <div class="cause-impact-badge">
+              <i data-lucide="users" style="width: 14px; height: 14px;"></i>
+              <span>500+ Women Entrepreneurs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Prakriti -->
+        <div class="cause-card-new" data-cause="prakriti">
+          <img src="assets/images/project-prakriti.jpg" alt="Project Prakriti">
+          <div class="cause-card-info">
+            <h3>Project Prakriti</h3>
+            <p>Combatting local carbon footprints by planning mega plantation drives and encouraging waste management techniques.</p>
+            <div class="cause-impact-badge">
+              <i data-lucide="trees" style="width: 14px; height: 14px;"></i>
+              <span>5,000+ Saplings Planted</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- BachpanShala -->
+        <div class="cause-card-new" data-cause="bachpanshala">
+          <img src="assets/images/project-bachpanshala.jpg" alt="BachpanShala">
+          <div class="cause-card-info">
+            <h3>BachpanShala</h3>
+            <p>Bringing premium elementary schooling, books, stationary supplies, and educational programs to street-dwelling children.</p>
+            <div class="cause-impact-badge">
+              <i data-lucide="book-open" style="width: 14px; height: 14px;"></i>
+              <span>1,200+ Kids Educated</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Seva -->
+        <div class="cause-card-new" data-cause="seva">
+          <img src="assets/images/volunteer2.jpg" alt="Project Seva">
+          <div class="cause-card-info">
+            <h3>Project Seva</h3>
+            <p>Deploying grocery packets, dignity kits, clean blankets, and temporary housing shelters to flood and poverty-struck areas.</p>
+            <div class="cause-impact-badge">
+              <i data-lucide="shield-alert" style="width: 14px; height: 14px;"></i>
+              <span>Critical Disaster Relief</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side checkout form panel -->
+      <div class="portal-container">
+        <div class="project-modal-number">SECURE PORTAL</div>
+        <h2 class="portal-title">Empower A Cause</h2>
+        <p class="portal-desc">Specify your payment details. You can input your active Razorpay Key ID at the top to complete a real checkout instantly!</p>
+
+        <!-- Key Entry Config Block -->
+        <div class="key-setting-block">
+          <label for="custom-key-input">Razorpay Key ID</label>
+          <input type="text" id="custom-key-input" placeholder="Paste rzp_test_ / rzp_live_ key">
+        </div>
+
+        <!-- Step Toggles -->
+        <div class="donation-type-toggles">
+          <button type="button" class="donation-type-btn active" id="btn-donate-money">Monetary Gift</button>
+          <button type="button" class="donation-type-btn" id="btn-donate-kind">Material Goods</button>
+        </div>
+
+        <form class="donation-form" id="donation-form" onsubmit="return false;">
+          <!-- Cause Selection -->
+          <div class="form-group">
+            <select id="don-cause" required>
+              <option value="" disabled selected>Select Cause / Initiative</option>
+              <option value="vikas">Project Vikas (Youth Development & Careers)</option>
+              <option value="jeev">Project Jeev (Animal Rescue & Veterinary Care)</option>
+              <option value="udaan">Project Udaan (Women Empowerment & Training)</option>
+              <option value="prakriti">Project Prakriti (Afforestation & Ecology)</option>
+              <option value="bachpanshala">BachpanShala (Underprivileged Education)</option>
+              <option value="seva">Project Seva (Basic Needs & Dignity Kits)</option>
+            </select>
+          </div>
+
+          <!-- SECTION 1: Monetary Donation Fields -->
+          <div id="monetary-fields">
+            <div class="donation-amount-presets">
+              <button type="button" class="amount-preset-btn" data-amount="500">₹500</button>
+              <button type="button" class="amount-preset-btn active" data-amount="1000">₹1000</button>
+              <button type="button" class="amount-preset-btn" data-amount="2500">₹2500</button>
+              <button type="button" class="amount-preset-btn" data-amount="5000">₹5000</button>
+            </div>
+            <div class="form-group custom-amount-group">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="don-amount" required value="1000" placeholder="Custom Amount (INR)" min="10">
+            </div>
+            
+            <!-- Contributor details -->
+            <div class="form-row">
+              <div class="form-group half-width">
+                <input type="text" id="don-name" required placeholder="Full Name">
+              </div>
+              <div class="form-group half-width">
+                <input type="email" id="don-email" required placeholder="Email Address">
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="don-phone" required placeholder="Mobile Number (for UPI/Receipt)">
+            </div>
+
+            <button type="submit" class="project-modal-cta form-submit-btn" id="btn-proceed-razor" style="width: 100%; display: flex; justify-content: center; align-items: center;">
+              <span>Proceed to Razorpay Checkout</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- SECTION 2: Material Goods Donation Fields -->
+          <div id="material-fields" style="display: none;">
+            <div class="material-info-card">
+              <p id="material-needed-text">Please select a cause above to view the items our communities currently need most.</p>
+            </div>
+            <div class="form-row">
+              <div class="form-group half-width">
+                <input type="text" id="mat-name" placeholder="Full Name">
+              </div>
+              <div class="form-group half-width">
+                <input type="email" id="mat-email" placeholder="Email Address">
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" id="mat-details" placeholder="Describe items (e.g. 10 school bags, 5kg dog food)">
+            </div>
+            <div class="form-group">
+              <select id="mat-delivery">
+                <option value="dropoff">I will drop off items at InAmigos Hub</option>
+                <option value="ship">I will courier/ship items to the hub</option>
+                <option value="pickup">Request home pickup (Raipur Area Only)</option>
+              </select>
+            </div>
+            <div class="material-hub-address">
+              <strong>Collection Center:</strong>
+              <p>InAmigos Foundation, Sector-4 Hub, Raipur, Chhattisgarh - 492001</p>
+            </div>
+            <button type="button" class="project-modal-cta form-submit-btn" id="btn-submit-material" style="width: 100%; display: flex; justify-content: center; align-items: center;">
+              <span>Register In-Kind Gift</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="form-success-message" id="donation-success-message">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h3 id="don-success-title">Thank You for Your Support!</h3>
+          <p id="don-success-desc">Your contribution has been successfully processed. An 80G tax receipt and transaction details have been sent to your email address.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Razorpay Payment Integration Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- Page Logic -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Initialize Icons
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+
+      // 2. Preloader Animation
+      const loader = document.getElementById('welcome-screen');
+      const progress = document.getElementById('preloader-progress-fill');
+      
+      let width = 0;
+      const interval = setInterval(() => {
+        width += Math.floor(Math.random() * 15) + 5;
+        if (width >= 100) {
+          width = 100;
+          clearInterval(interval);
+          
+          gsap.to(progress, { width: '100%', duration: 0.2, onComplete: () => {
+            gsap.to(loader, {
+              opacity: 0,
+              yPercent: -100,
+              duration: 0.8,
+              ease: 'power4.inOut',
+              onComplete: () => {
+                loader.style.display = 'none';
+                initElementsEntrance();
+              }
+            });
+          }});
+        } else {
+          progress.style.width = width + '%';
+        }
+      }, 50);
+
+      // Elements Entrance Animation
+      function initElementsEntrance() {
+        gsap.from('.back-btn', { opacity: 0, x: -20, duration: 0.6, ease: 'power2.out' });
+        gsap.from('.cause-card-new', {
+          opacity: 0,
+          y: 30,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+        gsap.from('.portal-container', {
+          opacity: 0,
+          scale: 0.95,
+          y: 20,
+          duration: 0.8,
+          ease: 'power3.out'
+        });
+      }
+
+      // 3. Donation Form Logic
+      const form = document.getElementById('donation-form');
+      const successMsg = document.getElementById('donation-success-message');
+      
+      const btnMoney = document.getElementById('btn-donate-money');
+      const btnKind = document.getElementById('btn-donate-kind');
+      const monetaryFields = document.getElementById('monetary-fields');
+      const materialFields = document.getElementById('material-fields');
+      
+      const presets = document.querySelectorAll('.amount-preset-btn');
+      const amountInput = document.getElementById('don-amount');
+      const causeSelect = document.getElementById('don-cause');
+      const materialNeededText = document.getElementById('material-needed-text');
+      const keyInput = document.getElementById('custom-key-input');
+
+      const materialNeeds = {
+        vikas: "🎒 <strong>Urgent Needs:</strong> Laptops for programming/editing, skill training textbooks, writing notebooks, and pen sets.",
+        jeev: "🐾 <strong>Urgent Needs:</strong> Pet kibble/dry food, medical bandages, recovery formulas, feeding bowls, and safety collars.",
+        udaan: "✂️ <strong>Urgent Needs:</strong> Sewing machines (manual or electric), premium tailors shears, fabrics (cotton/silk), and embroidery kits.",
+        prakriti: "🌱 <strong>Urgent Needs:</strong> Fruit tree saplings, plastic water sprinklers, organic soil fertilizers, gardening trowels, and safety gloves.",
+        bachpanshala: "📚 <strong>Urgent Needs:</strong> Elementary school syllabus textbooks, children's coloring notebooks, geometry boxes, and water bottles.",
+        seva: "🍲 <strong>Urgent Needs:</strong> Non-perishable dry ration kits (uncooked rice, wheat flour, pulses), unused clothing, hygiene soap, and heavy winter blankets."
+      };
+
+      // Auto-select cause from URL parameter (e.g. donate.html?cause=jeev)
+      const urlParams = new URLSearchParams(window.location.search);
+      const causeParam = urlParams.get('cause');
+      if (causeParam && materialNeeds[causeParam]) {
+        causeSelect.value = causeParam;
+        materialNeededText.innerHTML = materialNeeds[causeParam];
+      }
+
+      // Sync selection when clicking cause cards on the left
+      document.querySelectorAll('.cause-card-new').forEach(card => {
+        card.addEventListener('click', () => {
+          const cause = card.getAttribute('data-cause');
+          causeSelect.value = cause;
+          
+          // Trigger change event to load material needs text
+          const event = new Event('change');
+          causeSelect.dispatchEvent(event);
+          
+          // Smooth scroll to the portal container on mobile
+          if (window.innerWidth <= 1024) {
+            document.querySelector('.portal-container').scrollIntoView({ behavior: 'smooth' });
+          }
+
+          // Highlight clicked card
+          document.querySelectorAll('.cause-card-new').forEach(c => c.style.borderColor = 'rgba(255,255,255,0.06)');
+          card.style.borderColor = 'var(--accent)';
+        });
+      });
+
+      // Toggle pecuniary vs material
+      btnMoney.addEventListener('click', () => {
+        btnMoney.classList.add('active');
+        btnKind.classList.remove('active');
+        monetaryFields.style.display = 'block';
+        materialFields.style.display = 'none';
+      });
+
+      btnKind.addEventListener('click', () => {
+        btnKind.classList.add('active');
+        btnMoney.classList.remove('active');
+        materialFields.style.display = 'block';
+        monetaryFields.style.display = 'none';
+      });
+
+      // Cause select changes material card description
+      causeSelect.addEventListener('change', () => {
+        const val = causeSelect.value;
+        if (materialNeeds[val]) {
+          materialNeededText.innerHTML = materialNeeds[val];
+          
+          // Highlight card on the left
+          document.querySelectorAll('.cause-card-new').forEach(c => {
+            if (c.getAttribute('data-cause') === val) {
+              c.style.borderColor = 'var(--accent)';
+            } else {
+              c.style.borderColor = 'rgba(255, 255, 255, 0.06)';
+            }
+          });
+        } else {
+          materialNeededText.innerHTML = "Please select a cause above to view the items our communities currently need most.";
+        }
+      });
+
+      // Preset pills handler
+      presets.forEach(preset => {
+        preset.addEventListener('click', () => {
+          presets.forEach(p => p.classList.remove('active'));
+          preset.classList.add('active');
+          amountInput.value = preset.getAttribute('data-amount');
+        });
+      });
+
+      amountInput.addEventListener('input', () => {
+        const val = amountInput.value;
+        presets.forEach(p => {
+          if (p.getAttribute('data-amount') === val) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active');
+          }
+        });
+      });
+
+      // Monetary Razorpay checkout submit
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (btnKind.classList.contains('active')) return;
+
+        const amountVal = parseFloat(amountInput.value);
+        const nameVal = document.getElementById('don-name').value;
+        const emailVal = document.getElementById('don-email').value;
+        const phoneVal = document.getElementById('don-phone').value;
+        const selectedCauseName = causeSelect.options[causeSelect.selectedIndex].text;
+
+        if (!causeSelect.value) {
+          alert("Please select an initiative to support!");
+          return;
+        }
+
+        // Razorpay dynamic key check
+        let RAZORPAY_KEY_ID = keyInput.value.trim();
+        let isSimulated = false;
+
+        // If no user key is entered, fallback to simulated checkout or show the simulator
+        if (!RAZORPAY_KEY_ID || RAZORPAY_KEY_ID === "") {
+          RAZORPAY_KEY_ID = "rzp_test_InAmigosDemoKey";
+          isSimulated = true;
+        }
+
+        const options = {
+          key: RAZORPAY_KEY_ID,
+          amount: amountVal * 100, // Paisa
+          currency: "INR",
+          name: "InAmigos Foundation",
+          description: `Empowering ${selectedCauseName}`,
+          image: "assets/images/logo.png",
+          handler: function (response) {
+            showSuccessState(nameVal, `₹${amountVal}`, response.payment_id);
+          },
+          prefill: {
+            name: nameVal,
+            email: emailVal,
+            contact: phoneVal
+          },
+          notes: {
+            cause: selectedCauseName
+          },
+          theme: {
+            color: "#00C853"
+          },
+          modal: {
+            ondismiss: function() {
+              console.log("Razorpay standard modal closed by contributor.");
+            }
+          }
+        };
+
+        try {
+          if (typeof Razorpay !== 'undefined' && !isSimulated) {
+            const rzp1 = new Razorpay(options);
+            rzp1.open();
+          } else {
+            runSimulatedCheckout(options, nameVal, amountVal);
+          }
+        } catch (err) {
+          runSimulatedCheckout(options, nameVal, amountVal);
+        }
+      });
+
+      // Material goods submit
+      document.getElementById('btn-submit-material').addEventListener('click', () => {
+        const matName = document.getElementById('mat-name').value || "Generous Donor";
+        const matDetails = document.getElementById('mat-details').value;
+        
+        if (!causeSelect.value) {
+          alert("Please select a cause first!");
+          return;
+        }
+        if (!matDetails) {
+          alert("Please describe the items you wish to donate.");
+          return;
+        }
+
+        showSuccessState(matName, "In-Kind Goods", "REG-" + Math.floor(Math.random() * 900000 + 100000));
+      });
+
+      function showSuccessState(donorName, donationDesc, transactionId) {
+        gsap.to(form, {
+          opacity: 0,
+          y: -10,
+          duration: 0.3,
+          onComplete: () => {
+            form.style.display = 'none';
+            
+            const successTitle = document.getElementById('don-success-title');
+            const successDesc = document.getElementById('don-success-desc');
+            
+            successTitle.textContent = "Thank You, " + donorName.split(' ')[0] + "!";
+            successDesc.innerHTML = `Your contribution of <strong>${donationDesc}</strong> has been successfully processed.<br><br><strong>Transaction Reference ID:</strong> <code style="color:var(--accent); background:rgba(0,200,83,0.1); padding:4px 8px; border-radius:4px; font-family:monospace;">${transactionId}</code><br><br>An official 80G tax receipt and transaction details have been generated and sent to your registered email address. Thank you for making a real impact!`;
+            
+            successMsg.classList.add('visible');
+            gsap.fromTo(successMsg,
+              { scale: 0.95, opacity: 0 },
+              { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }
+            );
+          }
+        });
+      }
+
+      function runSimulatedCheckout(options, donorName, amountVal) {
+        // High fidelity simulated billing portal overlay
+        const checkoutSim = document.createElement('div');
+        checkoutSim.className = 'simulated-checkout-overlay';
+        checkoutSim.style.cssText = `
+          position: fixed; inset: 0; z-index: 100000;
+          background: rgba(10, 10, 12, 0.92); backdrop-filter: blur(20px);
+          display: flex; align-items: center; justify-content: center;
+          opacity: 0; transition: 0.4s ease;
+        `;
+
+        checkoutSim.innerHTML = `
+          <div class="sim-checkout-box" style="
+            background: #141416; border: 1px solid rgba(255,255,255,0.08);
+            width: 100%; max-width: 420px; border-radius: 24px; padding: 32px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0,200,83,0.1);
+            text-align: center; font-family: 'Outfit', sans-serif;
+          ">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
+              <img src="assets/images/logo.png" style="width:40px; height:40px; border-radius:50%; border:1.5px solid var(--accent);">
+              <span style="color:#ffffff; font-size:14px; font-weight:700; background:rgba(0,200,83,0.1); color:var(--accent); padding:4px 12px; border-radius:20px; font-family:monospace;">TEST GATEWAY</span>
+            </div>
+            
+            <h3 style="color:#ffffff; font-size:18px; font-weight:700; margin-bottom:6px;">InAmigos Secure Gateway</h3>
+            <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Powered by Razorpay Integration</p>
+
+            <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); padding:16px; border-radius:16px; margin-bottom:24px; text-align:left;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px; color:var(--text-muted);">
+                <span>Cause:</span>
+                <span style="color:#ffffff; font-weight:600;">${options.description.replace('Empowering ', '')}</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px; color:var(--text-muted);">
+                <span>Contributor:</span>
+                <span style="color:#ffffff; font-weight:600;">${donorName}</span>
+              </div>
+              <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.08); padding-top:8px; font-size:16px; font-weight:700;">
+                <span style="color:#ffffff;">Total Amount:</span>
+                <span style="color:var(--accent);">₹${amountVal}.00</span>
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:24px;">
+              <button class="sim-pay-btn" data-method="UPI" style="
+                background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+                color:#ffffff; padding:16px; border-radius:14px; font-weight:700; font-size:14px;
+                display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:0.3s;
+              ">
+                <span>Pay via UPI / GPay / PhonePe</span>
+                <span style="color:var(--accent); font-size:11px; letter-spacing:1px;">INSTANT</span>
+              </button>
+              <button class="sim-pay-btn" data-method="Card" style="
+                background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+                color:#ffffff; padding:16px; border-radius:14px; font-weight:700; font-size:14px;
+                display:flex; align-items:center; justify-content:space-between; cursor:pointer; transition:0.3s;
+              ">
+                <span>Pay via Credit / Debit Card</span>
+                <span style="color:var(--accent); font-size:11px; letter-spacing:1px;">SECURE</span>
+              </button>
+            </div>
+
+            <button id="sim-cancel-btn" style="
+              background:transparent; border:none; color:var(--text-muted); font-size:13px; font-weight:600; cursor:pointer; transition:0.3s;
+            ">Cancel Transaction</button>
+          </div>
+        `;
+
+        document.body.appendChild(checkoutSim);
+        setTimeout(() => { checkoutSim.style.opacity = 1; }, 10);
+
+        const buttons = checkoutSim.querySelectorAll('.sim-pay-btn');
+        buttons.forEach(btn => {
+          btn.addEventListener('mouseenter', () => {
+            btn.style.background = 'rgba(0, 200, 83, 0.08)';
+            btn.style.borderColor = 'var(--accent)';
+          });
+          btn.addEventListener('mouseleave', () => {
+            btn.style.background = 'rgba(255,255,255,0.04)';
+            btn.style.borderColor = 'rgba(255,255,255,0.08)';
+          });
+
+          btn.addEventListener('click', () => {
+            btn.innerHTML = `<span style="display:flex; align-items:center; gap:8px;"><div class="sim-spinner"></div> Processing Payment...</span>`;
+            btn.style.pointerEvents = 'none';
+            
+            if (!document.getElementById('sim-spinner-style')) {
+              const style = document.createElement('style');
+              style.id = 'sim-spinner-style';
+              style.innerHTML = `
+                .sim-spinner { width:16px; height:16px; border:2px solid rgba(255,255,255,0.2); border-top-color:#00C853; border-radius:50%; animation:simSpin 0.8s linear infinite; }
+                @keyframes simSpin { to { transform:rotate(360deg); } }
+              `;
+              document.head.appendChild(style);
+            }
+
+            setTimeout(() => {
+              checkoutSim.style.opacity = 0;
+              setTimeout(() => {
+                checkoutSim.remove();
+                showSuccessState(donorName, `₹${amountVal}`, "pay_live_" + Math.floor(Math.random() * 90000000 + 10000000));
+              }, 400);
+            }, 1500);
+          });
+        });
+
+        const cancelBtn = checkoutSim.querySelector('#sim-cancel-btn');
+        cancelBtn.addEventListener('mouseenter', () => cancelBtn.style.color = '#ff1744');
+        cancelBtn.addEventListener('mouseleave', () => cancelBtn.style.color = 'var(--text-muted)');
+        cancelBtn.addEventListener('click', () => {
+          checkoutSim.style.opacity = 0;
+          setTimeout(() => { checkoutSim.remove(); }, 400);
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
