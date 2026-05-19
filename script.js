@@ -68,6 +68,7 @@ function initWelcomeScreen() {
 
 /* ═══ 2. PAGE ANIMATIONS ═══ */
 function initPageAnimations() {
+  initScrollProgress();
   initHeroAnimations();
   initNavbar();
   initAboutTextReveal();
@@ -77,6 +78,8 @@ function initPageAnimations() {
   initGallery();
   initEventsSection();
   initProjectModal();
+  initFAQAccordion();
+  initVolunteerModal();
   initCTASection();
   initMagneticButtons();
   initMobileMenu();
@@ -554,6 +557,130 @@ function initProjectModal() {
     if (e.key === 'Escape' && overlay.classList.contains('active')) {
       closeProjectModal();
     }
+  });
+}
+
+/* ─── Scroll Progress Bar ─── */
+function initScrollProgress() {
+  const bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    bar.style.width = scrollPercent + '%';
+  });
+}
+
+/* ─── FAQ Accordion ─── */
+function initFAQAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const trigger = item.querySelector('.faq-trigger');
+    trigger.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      
+      // Close other FAQ items
+      faqItems.forEach(other => {
+        if (other !== item) {
+          other.classList.remove('active');
+        }
+      });
+
+      // Toggle current FAQ item
+      item.classList.toggle('active', !isActive);
+    });
+  });
+}
+
+/* ─── Volunteer Registration Form Modal ─── */
+function initVolunteerModal() {
+  const overlay = document.getElementById('volunteer-modal-overlay');
+  const modal = document.getElementById('volunteer-modal');
+  const closeBtn = document.getElementById('volunteer-modal-close');
+  const form = document.getElementById('volunteer-form');
+  const successMsg = document.getElementById('form-success-message');
+  
+  // Triggers
+  const openTriggers = document.querySelectorAll('.open-volunteer-trigger, a[href*="volunteers"], #nav-join-btn, #hero-volunteer-btn, #cta-join-btn, #cta-volunteer-btn');
+
+  if (!overlay || !modal || !closeBtn || !form) return;
+
+  function openVolunteerModal() {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    
+    // Reset form states
+    form.style.display = 'flex';
+    form.style.opacity = 1;
+    form.style.transform = 'translateY(0)';
+    successMsg.classList.remove('visible');
+    form.reset();
+
+    gsap.killTweensOf(modal);
+    gsap.fromTo(modal,
+      { scale: 0.92, y: 30, opacity: 0 },
+      { scale: 1, y: 0, opacity: 1, duration: 0.45, ease: 'power3.out' }
+    );
+  }
+
+  function closeVolunteerModal() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+
+    gsap.killTweensOf(modal);
+    gsap.to(modal, {
+      scale: 0.95,
+      y: 20,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power2.in'
+    });
+  }
+
+  // Intercept triggers to open direct modal instead of external redirect
+  openTriggers.forEach(trigger => {
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      openVolunteerModal();
+    });
+  });
+
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeVolunteerModal();
+  });
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      closeVolunteerModal();
+    }
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closeVolunteerModal();
+    }
+  });
+
+  // Handle Form Submission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Simulate submission with a high-end animation transition
+    gsap.to(form, {
+      opacity: 0,
+      y: -10,
+      duration: 0.3,
+      onComplete: () => {
+        form.style.display = 'none';
+        successMsg.classList.add('visible');
+        gsap.fromTo(successMsg,
+          { scale: 0.95, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.4, ease: 'power2.out' }
+        );
+      }
+    });
   });
 }
 

@@ -764,3 +764,210 @@ a { text-decoration: none; color: inherit; }
   .events-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
   .events-section { padding: 100px 0 120px; }
 }
+
+/* ─── Scroll Progress Bar ─── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  z-index: 100000;
+  transition: width 0.1s ease-out;
+}
+
+/* ─── FAQ Accordion ─── */
+.faq-section {
+  padding: 160px 0;
+  background: var(--bg-dark-2);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.faq-accordion {
+  max-width: 800px;
+  margin: 60px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.faq-item {
+  background: var(--bg-dark);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: 0.3s var(--ease);
+}
+.faq-item:hover {
+  border-color: rgba(0, 200, 83, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 30px;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 17px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s;
+}
+.faq-trigger:hover {
+  color: var(--accent);
+}
+.faq-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  transition: 0.3s var(--ease);
+}
+.faq-item.active .faq-icon-wrapper {
+  background: var(--accent);
+  color: var(--bg-dark);
+  transform: rotate(45deg);
+}
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  padding: 0 30px;
+}
+.faq-item.active .faq-content {
+  max-height: 200px;
+  padding: 0 30px 24px;
+}
+.faq-content p {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* ─── Volunteer Registration Form Modal ─── */
+.volunteer-modal-overlay {
+  z-index: 2100;
+}
+.volunteer-modal {
+  max-width: 950px;
+}
+.volunteer-modal-img img {
+  filter: brightness(0.85) contrast(1.05);
+}
+.volunteer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  transition: 0.3s var(--ease);
+}
+.form-group {
+  position: relative;
+  width: 100%;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-light);
+  font-family: inherit;
+  font-size: 14px;
+  transition: 0.3s var(--ease);
+  outline: none;
+}
+.form-group select {
+  appearance: none;
+  cursor: pointer;
+}
+.form-group select option {
+  background: var(--bg-dark-2);
+  color: var(--text-light);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 15px rgba(0, 200, 83, 0.1);
+}
+.form-submit-btn {
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 700;
+}
+.form-success-message {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 0;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: 0.4s var(--ease);
+}
+.form-success-message.visible {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+.form-success-message svg {
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 10px rgba(0, 200, 83, 0.3));
+}
+.form-success-message h3 {
+  font-family: var(--serif);
+  font-size: 28px;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+.form-success-message p {
+  font-size: 15px;
+  color: var(--text-muted);
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+@media(max-width: 850px) {
+  .volunteer-modal {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+@media(max-width: 768px) {
+  .faq-section {
+    padding: 100px 0;
+  }
+  .faq-trigger {
+    padding: 20px;
+    font-size: 15px;
+  }
+  .faq-content {
+    padding: 0 20px;
+  }
+  .faq-item.active .faq-content {
+    padding: 0 20px 20px;
+  }
+}
+
