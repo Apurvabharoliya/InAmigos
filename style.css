@@ -1143,8 +1143,47 @@ a { text-decoration: none; color: inherit; }
   }
 }
 /* ═══ DONATION PORTAL MODAL ═══ */
+.donation-modal-img {
+  position: relative;
+  overflow: hidden;
+}
 .donation-modal-img img {
-  filter: brightness(0.8) contrast(1.15) saturate(0.95);
+  filter: brightness(0.65) contrast(1.1) saturate(0.85);
+  transition: transform 0.8s var(--ease);
+}
+.donation-modal:hover .donation-modal-img img {
+  transform: scale(1.05);
+}
+.donation-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10, 10, 12, 0.15) 0%, rgba(10, 10, 12, 0.85) 100%);
+  display: flex;
+  align-items: flex-end;
+  padding: 36px;
+}
+.donation-quote {
+  font-family: var(--serif);
+  color: var(--text-light);
+  text-align: left;
+}
+.donation-quote .quote-text {
+  display: block;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 400;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+.donation-quote .quote-author {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
 }
 
 .donation-type-toggles {
