@@ -558,7 +558,7 @@ function initProjectModal() {
 }
 
 /* ═══ INIT ═══ */
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
   initWelcomeScreen();
 });
 
