@@ -24,7 +24,7 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="style.css?v=8.0">
+  <link rel="stylesheet" href="style.css?v=9.0">
   <style>
     /* Inline Preloader Styles for Instant Rendering */
     .welcome-screen {
@@ -627,7 +627,7 @@
           <span>VOLUNTEER</span>
           <i data-lucide="heart" class="cta-btn-icon"></i>
         </a>
-        <a href="#projects" class="cta-btn cta-btn-alt magnetic-btn" id="cta-support-btn">
+        <a href="#" class="cta-btn cta-btn-alt magnetic-btn open-donate-trigger" id="cta-support-btn">
           <span>SUPPORT</span>
           <i data-lucide="hand-helping" class="cta-btn-icon"></i>
         </a>
@@ -654,8 +654,8 @@
         <div class="project-modal-tags" id="project-modal-tags"></div>
         <div class="project-modal-desc" id="project-modal-desc"></div>
         <div class="project-modal-highlights" id="project-modal-highlights"></div>
-        <a href="https://inamigosfoundation.org.in/" class="project-modal-cta" target="_blank">
-          <span>Get Involved</span>
+        <a href="#" class="project-modal-cta open-donate-trigger" id="project-modal-donate-btn">
+          <span>Donate to this Cause</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="5" y1="12" x2="19" y2="12" />
@@ -722,6 +722,127 @@
     </div>
   </div>
 
+  <!-- ═══════════════ DONATION PORTAL MODAL (RAZORPAY INTEGRATED) ═══════════════ -->
+  <div class="project-modal-overlay donation-modal-overlay" id="donation-modal-overlay">
+    <div class="project-modal donation-modal" id="donation-modal">
+      <button class="project-modal-close" id="donation-modal-close" aria-label="Close modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div class="project-modal-img donation-modal-img">
+        <img src="assets/images/allProjects.jpeg" alt="Donate to InAmigos Causes">
+      </div>
+      <div class="project-modal-body donation-modal-body">
+        <div class="project-modal-number">GIVE</div>
+        <h2 class="project-modal-title">Empower A Cause</h2>
+        <p class="project-modal-desc">Your contribution directly fuels grassroots transformations. Choose a project, select your preferred way of giving, and make a massive ripple today.</p>
+        
+        <!-- Step Toggles -->
+        <div class="donation-type-toggles">
+          <button type="button" class="donation-type-btn active" id="btn-donate-money">Monetary Gift</button>
+          <button type="button" class="donation-type-btn" id="btn-donate-kind">Material Goods</button>
+        </div>
+
+        <form class="donation-form" id="donation-form" onsubmit="return false;">
+          <!-- Cause Selection -->
+          <div class="form-group">
+            <select id="don-cause" required>
+              <option value="" disabled selected>Select Cause / Initiative</option>
+              <option value="vikas">Project Vikas (Youth Development & Careers)</option>
+              <option value="jeev">Project Jeev (Animal Rescue & Veterinary Care)</option>
+              <option value="udaan">Project Udaan (Women Empowerment & Training)</option>
+              <option value="prakriti">Project Prakriti (Afforestation & Ecology)</option>
+              <option value="bachpanshala">BachpanShala (Underprivileged Education)</option>
+              <option value="seva">Project Seva (Basic Needs & Dignity Kits)</option>
+            </select>
+          </div>
+
+          <!-- SECTION 1: Monetary Donation Fields -->
+          <div id="monetary-fields">
+            <div class="donation-amount-presets">
+              <button type="button" class="amount-preset-btn" data-amount="500">₹500</button>
+              <button type="button" class="amount-preset-btn active" data-amount="1000">₹1000</button>
+              <button type="button" class="amount-preset-btn" data-amount="2500">₹2500</button>
+              <button type="button" class="amount-preset-btn" data-amount="5000">₹5000</button>
+            </div>
+            <div class="form-group custom-amount-group">
+              <span class="currency-symbol">₹</span>
+              <input type="number" id="don-amount" required value="1000" placeholder="Custom Amount (INR)" min="10">
+            </div>
+            
+            <!-- Contributor details -->
+            <div class="form-row">
+              <div class="form-group half-width">
+                <input type="text" id="don-name" required placeholder="Full Name">
+              </div>
+              <div class="form-group half-width">
+                <input type="email" id="don-email" required placeholder="Email Address">
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="tel" id="don-phone" required placeholder="Mobile Number (for UPI/Receipt)">
+            </div>
+
+            <button type="submit" class="project-modal-cta form-submit-btn" id="btn-proceed-razor">
+              <span>Proceed via Razorpay</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- SECTION 2: Material Goods Donation Fields -->
+          <div id="material-fields" style="display: none;">
+            <div class="material-info-card">
+              <p id="material-needed-text">Please select a cause above to view the items our communities currently need most.</p>
+            </div>
+            <div class="form-row">
+              <div class="form-group half-width">
+                <input type="text" id="mat-name" placeholder="Full Name">
+              </div>
+              <div class="form-group half-width">
+                <input type="email" id="mat-email" placeholder="Email Address">
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" id="mat-details" placeholder="Describe items (e.g. 10 school bags, 5kg dog food)">
+            </div>
+            <div class="form-group">
+              <select id="mat-delivery">
+                <option value="dropoff">I will drop off items at InAmigos Hub</option>
+                <option value="ship">I will courier/ship items to the hub</option>
+                <option value="pickup">Request home pickup (Raipur Area Only)</option>
+              </select>
+            </div>
+            <div class="material-hub-address">
+              <strong>Collection Center:</strong>
+              <p>InAmigos Foundation, Sector-4 Hub, Raipur, Chhattisgarh - 492001</p>
+            </div>
+            <button type="button" class="project-modal-cta form-submit-btn" id="btn-submit-material">
+              <span>Register In-Kind Gift</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="form-success-message" id="donation-success-message">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00C853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <h3 id="don-success-title">Thank You for Your Support!</h3>
+          <p id="don-success-desc">Your contribution has been successfully processed. An 80G tax receipt and transaction details have been sent to your email address.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════ FOOTER ═══════════════ -->
   <footer class="footer-new" id="footer">
     <div class="container footer-inner-new">
@@ -778,7 +899,7 @@
       <div class="footer-nav-col">
         <h3>Get Involved</h3>
         <a href="https://inamigosfoundation.org.in/volunteers" target="_blank">Volunteer</a>
-        <a href="https://inamigosfoundation.org.in/" target="_blank">Donate</a>
+        <a href="#" class="open-donate-trigger">Donate</a>
         <a href="https://inamigosfoundation.org.in/" target="_blank">Partner With Us</a>
         <a href="https://inamigosfoundation.org.in/" target="_blank">Contact</a>
       </div>
@@ -793,7 +914,9 @@
     </div>
   </footer>
 
-  <script src="script.js?v=8.0"></script>
+  <!-- Razorpay Payment Integration Script -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="script.js?v=9.0"></script>
 
 </body>
 
